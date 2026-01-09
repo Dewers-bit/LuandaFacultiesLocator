@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luanda Faculties Locator - Mapa</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <!-- App CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="map-page">
+
+    <nav class="navbar">
+        <div class="nav-brand">Luanda<span>Locator</span></div>
+        <div class="nav-actions">
+            <button id="logoutBtn" class="btn-secondary">Sair</button>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="sidebar">
+            <h2>Instituições</h2>
+            <div class="filter-group">
+                <input type="text" id="searchInput" placeholder="Buscar universidade...">
+            </div>
+            <ul id="institutionList" class="institution-list">
+                <!-- List items injected by JS -->
+            </ul>
+        </div>
+        <div id="map" class="map-container"></div>
+
+        <!-- Mini Info Screen (Overlay) -->
+        <div id="infoOverlay" class="info-overlay hidden">
+            <div class="info-card">
+                <button id="closeInfoBtn" class="close-btn">&times;</button>
+                <div class="info-header">
+                    <div class="info-icon">🎓</div>
+                    <h2 id="infoTitle">Nome da Universidade</h2>
+                </div>
+                <div class="info-body">
+                    <span id="infoType" class="badge">Universidade</span>
+
+                    <div class="info-metric">
+                        <span class="metric-label">Ranking:</span>
+                        <span id="infoRanking" class="metric-value">Top 1</span>
+                    </div>
+
+                    <p id="infoDetails" class="details-text">Detalhes da localização...</p>
+
+                    <div class="courses-container">
+                        <h4>Principais Cursos</h4>
+                        <p id="infoCourses" class="courses-text">Engenharia, Direito, Medicina...</p>
+                    </div>
+
+                    <div class="info-actions">
+                        <a id="infoWebsite" href="#" target="_blank" class="btn-primary">Visitar Website</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Admin Dashboard (Only visible for admin via JS) -->
+    <div id="adminBadge" class="admin-badge force-hidden">Admin Panel</div>
+
+    <div id="adminModal" class="info-overlay hidden">
+        <div class="info-card" style="max-width: 600px;">
+            <button id="closeAdminBtn" class="close-btn">&times;</button>
+            <div class="info-header">
+                <h2>Estatísticas do Site</h2>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div id="totalVisits" class="stat-number">0</div>
+                    <div>Visitas Totais</div>
+                </div>
+                <div class="stat-card">
+                    <div id="totalUsers" class="stat-number">0</div>
+                    <div>Usuários</div>
+                </div>
+                <div class="stat-card">
+                    <div id="totalInstitutions" class="stat-number">0</div>
+                    <div>Faculdades</div>
+                </div>
+            </div>
+
+            <h3>Últimos Acessos</h3>
+            <div style="max-height: 200px; overflow-y: auto;">
+                <table class="log-table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Usuário</th>
+                            <th>IP</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logTableBody">
+                        <!-- Login logs here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- App JS -->
+    <script src="{{ url_for('static', filename='js/MapManager.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/Auth.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/App.js') }}"></script>
+</body>
+
+</html>
